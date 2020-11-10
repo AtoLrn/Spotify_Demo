@@ -167,14 +167,47 @@ export class AlbumsComponent implements OnInit {
       }
 
       fetch("https://api.spotify.com/v1/me/albums?limit=5", req).then(response => {
-        response.json().then(result => {
+        response.json().then(async result => {
           console.log(result)
+          if (result.error) {
+            console.log(result.error.message)
+            await this.getRefreshedToken()
+            this.getCurrentAlbums()
+          }
           this.currentAlbum = result.items
         })
       })
     }
   }
 
+
+  getRefreshedToken = async ():Promise<void> => {
+    if (this.refresh) {
+      const header: Headers = new Headers({
+        "Authorization": "Basic YTU2ZWExNTRiOTM2NDI3N2FmOWRlMDAwNDYzNDZjOWI6ODZhZjU0MjMzYTE2NGQyYzhiNTk2MDZkZDgwN2I4ZjM="
+      })
+      const params: URLSearchParams = new URLSearchParams({
+        "grant_type": "refresh_token",
+        "refresh_token": this.refresh
+      })
+
+      const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: header,
+        body: params,
+        redirect: 'follow'
+      };
+
+      console.log(this.refresh)
+
+      const response = await fetch("https://accounts.spotify.com/api/token", requestOptions)
+      const result = await response.json()
+      this.bearer = result.access_token
+      localStorage.setItem('bearer', result.access_token)
+    } else {
+      console.error('No Refresh Token find')
+    }
+  }
   constructor(private route: ActivatedRoute) {
 
 
