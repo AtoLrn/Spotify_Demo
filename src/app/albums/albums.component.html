@@ -1,0 +1,49 @@
+<div style="padding: 0; margin: 0px;">
+    <div class="header">
+    <h1>Spotify App Test</h1>
+    
+      <form>
+        <input type="text" placeholder="Entrez le nom de l'album" #input>
+        <button type="submit" (click)="getAlbum(input.value)">Rechercher</button>
+  
+      </form>
+    </div>  
+    <div *ngIf="currentAlbum">
+      <h3>Album sauvegardé</h3>
+        <div class="savedAlbum" >
+          <img *ngFor="let item of currentAlbum" src="{{item.album.images[0].url}}">
+        </div>
+
+    </div>
+    <div *ngFor="let item of albums">
+      <div class="albumElem">
+        <div class="albumInfo">
+          <img src="{{item.albumInfo.images[0].url}}">
+          <div>
+            <h5>Album</h5>
+            <h4>{{item.albumInfo.name}}</h4>
+            <span>Par: {{item.albumInfo.artists[0].name}}</span>
+          </div>
+        </div>
+      
+        <ul >
+          <li *ngFor="let track of item.tracks.items" (click)="clicked(track.id)">{{track.name}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="player">
+      <div class="player-info" *ngIf="actualTitleSrc">
+        
+        <img width="50px" height="50px" src="{{actualTitleSrc}}">
+        <span>Titre : {{actualTitle}}</span>
+      </div>
+      <div class="player-control">
+        <button (click)="play()">Pause/play</button><button (click)="next()">Next</button>
+      </div>
+    </div>
+    <div #modal class="modal hide">
+      <h2>Titre ajouté à la file d'attente</h2>
+      <span>Votre titre sera joué ensuite</span>
+    </div>
+    
+  </div>

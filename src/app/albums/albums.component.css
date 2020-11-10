@@ -1,0 +1,150 @@
+.albumList {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+h1,
+* {
+  font-family: "Gill Sans", sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  margin-left: 1em;
+  background-color: #1db954;
+  padding: 0.5em 2em;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid #1db954;
+}
+
+input:focus {
+  outline: none;
+}
+
+.albumElem {
+  margin: 1em;
+  padding: 1em;
+  background: rgb(38, 38, 38);
+  background: linear-gradient(
+    0deg,
+    rgba(38, 38, 38, 1) 20%,
+    rgba(112, 112, 112, 1) 100%
+  );
+  color: white;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.albumInfo {
+  display: flex;
+  align-items: center;
+}
+
+.albumInfo div {
+  padding-left: 0.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.albumInfo div h4,
+.albumInfo div h5 {
+  margin: 0.5em 0;
+}
+
+.albumElem ul {
+  padding-left: 1em;
+  list-style-type: none;
+}
+
+.albumElem ul li {
+  transition: ease 0.3s;
+  padding: 0.5em 1em 0.2em 0.4em;
+  border-bottom: 1px solid #1db954;
+}
+
+.albumElem ul li:hover {
+  transition: ease 0.3s;
+  background-color: rgba(155, 155, 155, 0.623);
+}
+
+.albumElem img {
+  width: 100px;
+  height: 100px;
+}
+
+.player {
+  min-height: 50px;
+  background-color: #1ed760;
+  z-index: 2;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+}
+
+.player-info * {
+  padding: 0;
+  padding-left: 1em;
+}
+
+.player-control {
+  margin-right: 2em;
+  display: flex;
+}
+
+.player-control * {
+  padding: 0 1em;
+}
+
+.modal {
+  transition: ease 0.5s;
+  z-index: 1;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.show {
+  transition: ease 0.5s;
+  transform: translate(-50%, calc(-50% + 30vh));
+}
+
+.hide {
+  transform: translate(-50%, calc(-50% + 50vh));
+}
+
+.savedAlbum {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.savedAlbum > img {
+  flex: 1;
+  max-width: 100px;
+}
