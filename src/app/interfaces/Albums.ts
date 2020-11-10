@@ -1,5 +1,5 @@
 export interface AlbumInterface {
-  albumInfo: Object
+  albumInfo: Record<string, unknown>
   tracks: Track[]
   images?: Images[]
 }

@@ -1,15 +1,15 @@
 <div style="padding: 0; margin: 0px;">
     <div class="header">
-    <h1>Spotify App Test</h1>
+    <h1><a routerLink="/login">Spotify App Test</a></h1>
     
       <form>
         <input type="text" placeholder="Entrez le nom de l'album" #input>
-        <button type="submit" (click)="getAlbum(input.value)">Rechercher</button>
+        <button type="submit" (click)="searchAlbum(input.value)">Rechercher</button>
   
       </form>
     </div>  
     <div *ngIf="currentAlbum">
-      <h3>Album sauvegardé</h3>
+      <h3>Albums sauvegardés</h3>
         <div class="savedAlbum" >
           <img *ngFor="let item of currentAlbum" src="{{item.album.images[0].url}}">
         </div>
@@ -27,7 +27,7 @@
         </div>
       
         <ul >
-          <li *ngFor="let track of item.tracks.items" (click)="clicked(track.id)">{{track.name}}</li>
+          <li *ngFor="let track of item.tracks.items" (click)="queueTrack(track.id)">{{track.name}}</li>
         </ul>
       </div>
     </div>
