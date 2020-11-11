@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AlbumInterface, Track } from './../interfaces/Albums'
+import { albumInfo, AlbumInterface, Track } from './../interfaces/Albums'
 import { Howl } from 'howler'
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { getAlbumApi, getBearerToken, getSavedAlbums, getRefreshedToken, getTrackInfo } from './spotify-api';
+import { getAlbum, getBearerToken, getSavedAlbums, getRefreshedToken, getTrackInfo } from './spotify-api';
 import { Tokens } from '../interfaces/Tokens';
 
 @Component({
@@ -21,16 +21,16 @@ export class AlbumsComponent implements OnInit {
   code: string
   bearer: string
   refresh: string
-  currentAlbum: Record<string, unknown>[]
+  currentAlbum: albumInfo[]
   musicList: Track[] = []
   routeSub: Subscription;
 
   searchAlbum = async (albumName: string): Promise<void> => {
-    const albums = await getAlbumApi(albumName, this.bearer)
+    const albums = await getAlbum(albumName, this.bearer)
     this.albums = albums
   }
 
-  queueTrack = async (trackId: number): Promise<void> => {
+  queueTrack = async (trackId: string): Promise<void> => {
     if (this.bearer) {
       const tracksInfo = await getTrackInfo(this.bearer, trackId)
   
@@ -98,8 +98,13 @@ export class AlbumsComponent implements OnInit {
         this.currentAlbum = currentAlbum
       } else {
         // If we don't have current albums, get a new tokens and try to get saved albums
-        this.updateTokenInformation({bearer: await getRefreshedToken(this.refresh)})
-        this.getCurrentAlbums()
+        
+        const bearerToken = await getRefreshedToken(this.refresh)
+        if (bearerToken) {
+          this.updateTokenInformation({bearer: bearerToken})
+          this.getCurrentAlbums()
+        }
+
         
       }
     }
@@ -126,13 +131,17 @@ export class AlbumsComponent implements OnInit {
   ngOnInit(): void {
     this.bearer = localStorage.getItem('bearer')
     this.refresh = localStorage.getItem('refresh')
+
+    //console.log('bearer ', this.bearer, 'refresh', this.refresh)
     
       this.routeSub = this.route.queryParams.subscribe(async params => {
         
         if (params.code ) {
-          if (this.bearer === 'undefined' || this.refresh  === 'undefined') {
+          // Verify is egal to undefined STRING because getItem give back a string even if nothing is defined
+          if (this.bearer == 'undefined' || this.refresh == 'undefined' || !this.bearer || !this.refresh) {
             const code = params.code
             const {bearer, refresh} = await getBearerToken(code)
+            console.log('HERE')
             this.updateTokenInformation({bearer, refresh, reset: true})
           }
         this.getCurrentAlbums()
@@ -145,7 +154,8 @@ export class AlbumsComponent implements OnInit {
       })
   }
 
-  ngOnDestroy= (): void => {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  ngOnDestroy () {
     this.routeSub?.unsubscribe();
     this.sound?.unload();
   }

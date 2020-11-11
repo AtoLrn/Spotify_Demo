@@ -1,6 +1,6 @@
-import { AlbumInterface } from '../interfaces/Albums'
+import { albumInfo, AlbumInterface, Track } from '../interfaces/Albums'
 
-export const getAlbumApi = async (albumName: string, bearer: string): Promise<AlbumInterface[]> => {
+export const getAlbum = async (albumName: string, bearer: string): Promise<AlbumInterface[]> => {
     if (bearer) {
         const header: Headers = new Headers({
             'Authorization': 'Bearer '+bearer,
@@ -54,7 +54,7 @@ export const getRefreshedToken = async (refreshToken: string):Promise<string | n
     }
   }
 
-export const getSavedAlbums = async (bearerToken: string): Promise<Record<string, unknown>[] | null> => {
+export const getSavedAlbums = async (bearerToken: string): Promise<albumInfo[] | null> => {
         const header: Headers = new Headers({
           'Authorization': 'Bearer '+bearerToken,
         })
@@ -97,7 +97,7 @@ export const  getBearerToken = async (code: string): Promise<any> => {
     return { bearer: result.access_token, refresh: result.refresh_token }
 }
 
-export const getTrackInfo = async (bearer, trackId): Promise<any> => {
+export const getTrackInfo = async (bearer: string, trackId: string): Promise<Track> => {
     const header: Headers = new Headers({
         'Authorization': 'Bearer '+bearer,
     })

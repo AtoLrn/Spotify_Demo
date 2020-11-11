@@ -1,7 +1,19 @@
 export interface AlbumInterface {
-  albumInfo: Record<string, unknown>
+  albumInfo: albumInfo
   tracks: Track[]
   images?: Images[]
+}
+
+export interface albumInfo {
+  images: {
+      url: string
+  } []
+   
+  artists: {
+    name: string
+  } []
+
+  name: string
 }
 
 export interface Track {
