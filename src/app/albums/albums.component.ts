@@ -31,7 +31,7 @@ export class AlbumsComponent implements OnInit {
   }
 
   queueTrack = async (trackId: string): Promise<void> => {
-    if (this.bearer) {
+    if (this.bearer && this.bearer !== 'undefined') {
       const tracksInfo = await getTrackInfo(this.bearer, trackId)
   
       if(tracksInfo.preview_url) {
@@ -92,7 +92,7 @@ export class AlbumsComponent implements OnInit {
 
   getCurrentAlbums = async ():Promise<void> => {
     // If we have bearer and refresh we can get the saved Albums
-    if (this.bearer !== 'undefined' && this.refresh !== 'undefined') {
+    if ((this.bearer !== 'undefined' && this.refresh !== 'undefined') && this.bearer && this.refresh) {
       const currentAlbum = await getSavedAlbums(this.bearer)
       if (currentAlbum) {
         this.currentAlbum = currentAlbum
