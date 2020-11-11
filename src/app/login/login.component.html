@@ -2,13 +2,13 @@
     <h1>Vous voulez profitez de toutes les fonctionnalités ?</h1>
     <div>
         
-        <span>Pour cela identifier vous !</span>
+        <span>Pour cela identifiez vous !</span>
         <a href='https://accounts.spotify.com/fr/authorize?response_type=code&client_id=a56ea154b9364277af9de00046346c9b&scope=user-read-private user-library-read&redirect_uri=http://localhost:4200/callback'>Se connecter</a>
     </div>
-    <h3>Vous n'en voulez pas ? :(</h3>
+    <h3>Vous ne voulez pas ?(</h3>
     <div>
         
-        <span>Il va tout de même falloir donner un token Bearer pour que l'api fonctionne :0</span>
+        <span>Il faut tout de même fournir un token Bearer pour que l'api fonctionne</span>
         <input type="text" placeholder="token bearer" #input>
         <button (click)="skip(input.value)">Valider</button>
     </div>
